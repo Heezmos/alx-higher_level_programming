@@ -1,3 +1,3 @@
-#!/usr/bin/python3
-for lett in range(97, 123):
-    print(chr(lett), end="")
+for i in range(ord('a'), ord('z') + 1):
+    if chr(i) not in ['e', 'q']:
+        print(f"{chr(i)}", end='')
