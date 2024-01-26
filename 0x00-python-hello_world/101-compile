@@ -1,0 +1,8 @@
+#!/bin/bash/python3
+import os
+import py_compile
+filename = os.environ.get('PYFILE')
+py_compile.compile(filename)
+new_filename = filename + 'c'
+os.rename('__pycache__/' + filename + '.cpython-38.pyc', new_filename)
+print(f'Compiled {filename} to {new_filename}')
