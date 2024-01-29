@@ -1,6 +1,6 @@
-#!/usr/bin/python3
+#/usr/bin/python3
 """
-function def roman_to_int(roman_string): that converts a Roman numeral to an integer.
+function def roman_to_int(roman_string):
 """
 
 
