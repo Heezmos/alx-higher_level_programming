@@ -1,56 +1,71 @@
 #include "lists.h"
-#include <stdlib.h>
 
 /**
-* reverse_array -
-* @a: int array to reverse
-* @n: number of elements in the array
-* Return: concatenated string
+* reverse_listint - reverses linked list
+* @head: pointer to the first node in the lists
+* Return: pointer to the first node in the new lists
 */
-
-void reverse_array(int *a, int n)
+void reverse_listint(listint_t **head)
 {
-int *begin = a;
-int *end;
-int hold = 0;
+listint_t *prev = NULL;
+listint_t *current = *head;
+listint_t *next = NULL;
 
-end = a + n - 1;
-for (; begin < end; begin++, end--)
+while (current)
 {
-hold = *end;
-*end = *begin;
-*begin = hold;
+next = current->next;
+current->next = prev;
+prev = current;
+current = next;
 }
+
+*head = prev;
 }
 
 /**
-* is_palindrome - Return 1  if palindrome, 0 if not
-* @head: linked list
-* Return: Return 1  if palindrome, 0 if not
+* is_palindrome - checks a linked list is a palindrome
+* @head: double pointer to the linked lists
+*
+* Return: 1 if it is
 */
-
 int is_palindrome(listint_t **head)
 {
-int size, *list, *rev;
-listint_t *copy = *head;
+listint_t *slow = *head, *fast = *head, *temp = *head, *dup = NULL;
 
-if (!head || !copy)
-return (0);
-if (!copy->next)
+if (*head == NULL || (*head)->next == NULL)
 return (1);
 
-list = malloc(sizeof(int *));
-if (!list)
-return (0);
-rev = malloc(sizeof(int *));
-if (!rev)
-return (0);
-for (size = 0; copy; copy = copy->next, size++)
-list[size] = copy->n;
+while (1)
+{
+fast = fast->next->next;
+if (!fast)
+{
+dup = slow->next;
+break;
+}
+if (!fast->next)
+{
+dup = slow->next->next;
+break;
+}
+slow = slow->next;
+}
 
-list = rev;
-reverse_array(rev, size);
-if (list == rev)
+reverse_listint(&dup);
+
+while (dup && temp)
+{
+if (temp->n == dup->n)
+{
+dup = dup->next;
+temp = temp->next;
+}
+else
+return (0);
+}
+
+if (!dup)
 return (1);
+
 return (0);
 }
